@@ -112,7 +112,11 @@ export function WorkViewer() {
               exit="exit"
               transition={scaleTransition}
               className="relative flex h-full w-[92%] items-center justify-center overflow-hidden rounded-xl shadow-lg ring-1 ring-border/60"
-              onClick={() => router.push(`/projects/${current.slug}`)}
+              onClick={() => {
+                document.documentElement.scrollTop = 0;
+                document.body.scrollTop = 0;
+                router.push(`/projects/${current.slug}`);
+              }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img

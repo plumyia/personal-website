@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import type { ProjectCard as ProjectCardType } from "@/lib/types";
 import { Tag } from "@/components/shared/tag";
@@ -12,6 +12,7 @@ interface ProjectExpandableGalleryProps {
 
 export function ProjectExpandableGallery({ projects }: ProjectExpandableGalleryProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const router = useRouter();
 
   const getFlexValue = (index: number) => {
     if (hoveredIndex === null) return 1;
@@ -23,19 +24,24 @@ export function ProjectExpandableGallery({ projects }: ProjectExpandableGalleryP
       {/* Horizontal Expandable Image Row */}
       <div className="flex gap-3 h-[420px] w-full">
         {projects.map((project, index) => (
-          <Link
+          <motion.div
             key={project.slug}
-            href={`/projects/${project.slug}`}
             className="cursor-hover cursor-none relative overflow-hidden rounded-lg"
+            role="button"
+            tabIndex={0}
             style={{ flex: 1 }}
+            animate={{ flex: getFlexValue(index) }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
             onMouseEnter={() => setHoveredIndex(index)}
             onMouseLeave={() => setHoveredIndex(null)}
+            onClick={() => {
+              // Reset scroll position before navigation — no animation, instant jump.
+              // This ensures the project detail page always renders from the top.
+              document.documentElement.scrollTop = 0;
+              document.body.scrollTop = 0;
+              router.push(`/projects/${project.slug}`);
+            }}
           >
-            <motion.div
-              className="w-full h-full"
-              animate={{ flex: getFlexValue(index) }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
-            >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={project.cover}
@@ -64,7 +70,6 @@ export function ProjectExpandableGallery({ projects }: ProjectExpandableGalleryP
               </span>
             </motion.div>
           </motion.div>
-          </Link>
         ))}
       </div>
 
@@ -103,12 +108,12 @@ export function ProjectExpandableGallery({ projects }: ProjectExpandableGalleryP
             transition={{ duration: 0.3 }}
             className="flex items-center justify-center h-full"
           >
-            <Link
-              href="/work"
+            <button
+              onClick={() => router.push("/work")}
               className="cursor-hover inline-flex items-center gap-2 rounded-full border border-accent px-5 py-2 text-[13px] font-medium text-accent transition-all duration-300 hover:bg-accent hover:text-white"
             >
               查看更多项目 &rarr;
-            </Link>
+            </button>
           </motion.div>
         )}
       </div>
