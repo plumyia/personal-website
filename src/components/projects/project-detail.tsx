@@ -524,6 +524,12 @@ export function ProjectDetail({ project }: Props) {
   const heroImgRef = useRef<HTMLImageElement>(null);
   const [heroReady, setHeroReady] = useState(false);
 
+  // Before paint: ensure page starts at top. useLayoutEffect runs synchronously
+  // after DOM commit but BEFORE browser paints — no visible scroll jump.
+  useLayoutEffect(() => {
+    document.documentElement.scrollTop = 0;
+  }, [project.slug]);
+
   // Safety timeout — force-start phase animation after 2.5s even if
   // hero image hasn't fired onLoad (e.g. network error, extreme slowness)
   useEffect(() => {
@@ -1111,7 +1117,6 @@ export function ProjectDetail({ project }: Props) {
               {prevProject && (
                 <Link
                   href={`/projects/${prevProject.slug}`}
-                  scroll={false}
                   className="cursor-hover group flex flex-col text-left"
                 >
                   <span className="text-[11px] tracking-widest text-text-tertiary uppercase">
@@ -1127,7 +1132,6 @@ export function ProjectDetail({ project }: Props) {
               {nextProject && (
                 <Link
                   href={`/projects/${nextProject.slug}`}
-                  scroll={false}
                   className="cursor-hover group flex flex-col text-right"
                 >
                   <span className="text-[11px] tracking-widest text-text-tertiary uppercase">
