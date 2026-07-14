@@ -308,20 +308,23 @@ export default function BrandsPage() {
     };
   }, [selectedIndex]);
 
-  // Preload + pre-decode all brand detail images so src swap is instant
+  // Preload detail images on hover — when user hovers a brand card, start
+  // downloading its detail image(s) so they're cached by click time.
+  const preloadedRef = useRef<Set<string>>(new Set());
   useEffect(() => {
-    brandLogos.forEach(async (brand) => {
-      const urls = [`/brands/detail/${brand.slug}-detail.jpg`];
-      if (brand.hasDetail0) urls.push(`/brands/detail/${brand.slug}-detail0.jpg`);
-      for (const url of urls) {
-        const img = new window.Image();
-        img.src = url;
-        if (img.decode) {
-          try { await img.decode(); } catch { /* ignore */ }
-        }
-      }
+    if (!hoveredSlug) return;
+    const brand = brandLogos.find((b) => b.slug === hoveredSlug);
+    if (!brand) return;
+    const urls = [`/brands/detail/${brand.slug}-detail.jpg`];
+    if (brand.hasDetail0) urls.push(`/brands/detail/${brand.slug}-detail0.jpg`);
+    urls.forEach((url) => {
+      if (preloadedRef.current.has(url)) return;
+      preloadedRef.current.add(url);
+      const img = new window.Image();
+      img.src = url;
+      if (img.decode) img.decode().catch(() => {});
     });
-  }, []);
+  }, [hoveredSlug]);
 
   return (
     <>
@@ -331,17 +334,11 @@ export default function BrandsPage() {
         </h1>
         <p className="mt-2 text-[14px] text-text-tertiary">Brand Partners</p>
 
-        {/* Hidden preload — real DOM img tags so browser decodes preview + detail images eagerly */}
+        {/* Hidden preload — preview images only (small, ~50KB each). Detail images
+            are preloaded on hover instead — too large to load all at once. */}
         <div aria-hidden="true" style={{ position: "absolute", width: 0, height: 0, overflow: "hidden", opacity: 0, pointerEvents: "none" }}>
-          {brandLogos.flatMap((brand) => {
-            const imgs = [{ key: brand.slug, src: `/brands/preview/${brand.slug}-preview.jpg` }];
-            imgs.push({ key: `${brand.slug}-detail`, src: `/brands/detail/${brand.slug}-detail.jpg` });
-            if (brand.hasDetail0) {
-              imgs.push({ key: `${brand.slug}-detail0`, src: `/brands/detail/${brand.slug}-detail0.jpg` });
-            }
-            return imgs;
-          }).map(({ key, src }) => (
-            <img key={key} src={src} alt="" loading="eager" decoding="sync" />
+          {brandLogos.map((brand) => (
+            <img key={brand.slug} src={`/brands/preview/${brand.slug}-preview.jpg`} alt="" loading="eager" decoding="sync" />
           ))}
         </div>
 

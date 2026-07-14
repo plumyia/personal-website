@@ -524,11 +524,6 @@ export function ProjectDetail({ project }: Props) {
   const heroImgRef = useRef<HTMLImageElement>(null);
   const [heroReady, setHeroReady] = useState(false);
 
-  // Reset scroll position when navigating between project detail pages
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [project.slug]);
-
   // Safety timeout — force-start phase animation after 2.5s even if
   // hero image hasn't fired onLoad (e.g. network error, extreme slowness)
   useEffect(() => {
