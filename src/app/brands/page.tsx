@@ -137,8 +137,8 @@ function BrandLightbox({
                 <img
                   src={
                     brand.hasDetail0
-                      ? `/brands/detail/${brand.slug}-detail0.webp`
-                      : `/brands/detail/${brand.slug}-detail.webp`
+                      ? `/brands/detail/${brand.slug}-detail0.jpg`
+                      : `/brands/detail/${brand.slug}-detail.jpg`
                   }
                   alt=""
                   className={showDetail0 ? "block w-full" : "hidden"}
@@ -149,7 +149,7 @@ function BrandLightbox({
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   ref={mainImgRef}
-                  src={`/brands/detail/${brand.slug}-detail.webp`}
+                  src={`/brands/detail/${brand.slug}-detail.jpg`}
                   alt={`${brand.name} 详情`}
                   className={`block w-full ${showDetail0 ? "-mt-px" : ""}`}
                   draggable={false}
@@ -311,8 +311,8 @@ export default function BrandsPage() {
   // Preload + pre-decode all brand detail images so src swap is instant
   useEffect(() => {
     brandLogos.forEach(async (brand) => {
-      const urls = [`/brands/detail/${brand.slug}-detail.webp`];
-      if (brand.hasDetail0) urls.push(`/brands/detail/${brand.slug}-detail0.webp`);
+      const urls = [`/brands/detail/${brand.slug}-detail.jpg`];
+      if (brand.hasDetail0) urls.push(`/brands/detail/${brand.slug}-detail0.jpg`);
       for (const url of urls) {
         const img = new window.Image();
         img.src = url;
@@ -335,9 +335,9 @@ export default function BrandsPage() {
         <div aria-hidden="true" style={{ position: "absolute", width: 0, height: 0, overflow: "hidden", opacity: 0, pointerEvents: "none" }}>
           {brandLogos.flatMap((brand) => {
             const imgs = [{ key: brand.slug, src: `/brands/preview/${brand.slug}-preview.jpg` }];
-            imgs.push({ key: `${brand.slug}-detail`, src: `/brands/detail/${brand.slug}-detail.webp` });
+            imgs.push({ key: `${brand.slug}-detail`, src: `/brands/detail/${brand.slug}-detail.jpg` });
             if (brand.hasDetail0) {
-              imgs.push({ key: `${brand.slug}-detail0`, src: `/brands/detail/${brand.slug}-detail0.webp` });
+              imgs.push({ key: `${brand.slug}-detail0`, src: `/brands/detail/${brand.slug}-detail0.jpg` });
             }
             return imgs;
           }).map(({ key, src }) => (

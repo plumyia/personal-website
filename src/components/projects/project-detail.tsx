@@ -92,9 +92,11 @@ type HeroPhase = "enter" | "blur" | "text";
 function HoverVideo({
   src,
   className = "",
+  preload = "auto",
 }: {
   src: string;
   className?: string;
+  preload?: "auto" | "metadata" | "none";
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [hasPlayed, setHasPlayed] = useState(false);
@@ -113,7 +115,7 @@ function HoverVideo({
       muted
       loop
       playsInline
-      preload="metadata"
+      preload={preload}
       className={className}
       onMouseEnter={handleHover}
       whileHover={{ scale: 1.02 }}

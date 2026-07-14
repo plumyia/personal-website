@@ -36,5 +36,13 @@ export default async function ProjectDetailPage({
   const project = projectDetails[slug];
   if (!project) notFound();
 
-  return <ProjectDetail project={project} />;
+  return (
+    <>
+      {/* SSR preload — browser discovers hero during HTML parse, NOT after JS hydrates.
+          Critical because the hero is a progressive JPEG now: first scan renders within
+          ~20% of download, so early discovery = near-instant first paint. */}
+      <link rel="preload" as="image" href={project.hero} fetchPriority="high" />
+      <ProjectDetail project={project} />
+    </>
+  );
 }

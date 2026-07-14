@@ -185,7 +185,7 @@ export const projectDetails: Record<string, ProjectDetail> = {
     summary:
       "郑州、厦门、天津、青岛四城校园巡回，推广新品椰子海苔，线下触达4.7万+。",
     cover: "/projects/campus-tour/cover.jpg",
-    hero: "/projects/campus-tour/hero.webp",
+    hero: "/projects/campus-tour/hero.jpg",
     metrics: [
       { label: "线下触达", value: "47,500+" },
       { label: "线上曝光", value: "110,377" },
@@ -227,7 +227,7 @@ export const projectDetails: Record<string, ProjectDetail> = {
     summary:
       "首度酒店跨界，联合洲际与希尔顿打造沉浸式品牌体验，覆盖住客全旅程触点，总曝光近30万。",
     cover: "/projects/sanya-hotel/cover.jpg",
-    hero: "/projects/sanya-hotel/hero.webp",
+    hero: "/projects/sanya-hotel/hero.jpg",
     metrics: [
       { label: "总曝光", value: "293,278+" },
       { label: "KOL粉丝覆盖", value: "496,153" },
@@ -304,7 +304,7 @@ export const projectDetails: Record<string, ProjectDetail> = {
     summary:
       "大学路圣诞集市摊位+人偶巡游，扭蛋机制驱动社媒涨粉，两日销售额超额完成目标。",
     cover: "/projects/xmas-market/cover.jpg",
-    hero: "/projects/xmas-market/hero.webp",
+    hero: "/projects/xmas-market/hero.jpg",
     metrics: [
       { label: "总曝光", value: "47,248+" },
       { label: "扭蛋互动", value: "1,500+" },
@@ -348,7 +348,7 @@ export const projectDetails: Record<string, ProjectDetail> = {
     summary:
       "六一儿童节联合苏河湾万象天地，以摊位+人偶+伴手礼融入萌宠主题活动，三天触达1.8万+。",
     cover: "/projects/pet-party/cover.jpg",
-    hero: "/projects/pet-party/hero.webp",
+    hero: "/projects/pet-party/hero.jpg",
     metrics: [
       { label: "参与人数", value: "18,000+" },
       { label: "社媒曝光", value: "226,211" },
@@ -392,7 +392,7 @@ export const projectDetails: Record<string, ProjectDetail> = {
     summary:
       "北京三里屯泰国风情节，以摊位打卡+骰子游戏+双人偶CP巡游深度参与，线下触达3万+。",
     cover: "/projects/bangkok-festival/cover.jpg",
-    hero: "/projects/bangkok-festival/hero.webp",
+    hero: "/projects/bangkok-festival/hero.jpg",
     metrics: [
       { label: "线下触达", value: "30,000+" },
       { label: "销售额", value: "¥9,096" },
