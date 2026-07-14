@@ -34,13 +34,7 @@ export function ProjectExpandableGallery({ projects }: ProjectExpandableGalleryP
             transition={{ duration: 0.5, ease: "easeInOut" }}
             onMouseEnter={() => setHoveredIndex(index)}
             onMouseLeave={() => setHoveredIndex(null)}
-            onClick={() => {
-              // Reset scroll position before navigation — no animation, instant jump.
-              // This ensures the project detail page always renders from the top.
-              document.documentElement.scrollTop = 0;
-              document.body.scrollTop = 0;
-              router.push(`/projects/${project.slug}`);
-            }}
+            onClick={() => router.push(`/projects/${project.slug}`)}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
