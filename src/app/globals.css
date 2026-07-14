@@ -1,0 +1,328 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Design Tokens — 黄油吐司 · 可颂
+   ============================================================ */
+
+@theme {
+  /* Background — butter toast */
+  --color-bg-primary: #fefaf3;
+  --color-bg-secondary: #f7f0e4;
+  --color-bg-tertiary: #efe6d5;
+
+  /* Text — coffee browns */
+  --color-text-primary: #3d2e20;
+  --color-text-secondary: #8b7355;
+  --color-text-tertiary: #b8a088;
+
+  /* Accent — croissant gold */
+  --color-accent: #c8975e;
+  --color-accent-hover: #b07d45;
+  --color-accent-light: rgba(200, 151, 94, 0.12);
+
+  /* Border — wheat */
+  --color-border: #e6dcc8;
+
+  /* Font families */
+  --font-display: "Playfair Display", "Noto Serif SC", serif;
+  --font-body: "Inter", "Noto Sans SC", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+/* ============================================================
+   Base Styles
+   ============================================================ */
+
+html {
+  scroll-behavior: smooth;
+  cursor: none;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+
+/* Grain texture overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  opacity: 0.1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* Selection */
+::selection {
+  background: var(--color-accent-light);
+  color: var(--color-text-primary);
+}
+
+/* Focus visible */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ============================================================
+   Custom Cursor
+   ============================================================ */
+
+.cursor-dot {
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid var(--color-accent);
+  border-radius: 50%;
+  background: transparent;
+  transition: width 0.2s ease, height 0.2s ease, background 0.2s ease,
+              border-color 0.2s ease, transform 0.15s ease-out;
+  pointer-events: none;
+}
+
+.cursor-dot.hover {
+  width: 48px;
+  height: 48px;
+  background: var(--color-accent-light);
+  border-color: var(--color-accent);
+}
+
+.cursor-dot.hover-light {
+  background: var(--color-accent-light);
+  border-color: var(--color-accent);
+}
+
+.cursor-dot.click {
+  width: 16px;
+  height: 16px;
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.cursor-dot.phone {
+  width: 32px;
+  height: 32px;
+  border-color: #f0c060;
+  background: rgba(240, 192, 96, 0.35);
+}
+
+a,
+button,
+input,
+textarea,
+[role="button"] {
+  cursor: none;
+}
+
+/* ============================================================
+   Animations
+   ============================================================ */
+
+@keyframes float-ring {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.3; }
+  50% { transform: translateY(-18px) scale(1.05); opacity: 0.6; }
+}
+
+.animate-float-ring {
+  animation: float-ring 6s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(0.8); opacity: 0.3; }
+  50% { transform: scale(1.3); opacity: 0.7; }
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 4s ease-in-out infinite;
+}
+
+@keyframes gentle-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-gentle-spin {
+  animation: gentle-spin 20s linear infinite;
+}
+
+/* Slide-in from left */
+@keyframes slide-in-left {
+  0% { opacity: 0; transform: translateX(-40px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+.animate-slide-left {
+  animation: slide-in-left 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Slide-in from right */
+@keyframes slide-in-right {
+  0% { opacity: 0; transform: translateX(40px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+.animate-slide-right {
+  animation: slide-in-right 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Vertical reveal — image uncovered top to bottom */
+@keyframes reveal-vertical {
+  0% { clip-path: inset(0 0 100% 0); }
+  100% { clip-path: inset(0 0 0 0); }
+}
+
+.animate-reveal-vertical {
+  animation: reveal-vertical 1s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+/* ============================================================
+   Hero Name — Cinematic Kinetic Typography Reveal
+   Diagonal wipe mask + blur → sharp + fade in.
+   All compositor-only properties, GPU-accelerated.
+   ============================================================ */
+
+@keyframes cinematic-reveal {
+  0% {
+    opacity: 0;
+    filter: blur(10px);
+    clip-path: polygon(-30% 0, 0 0, 0 100%, -50% 100%);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+    clip-path: polygon(0 -30%, 130% -30%, 110% 100%, 0 100%);
+  }
+}
+
+.animate-cinematic-reveal {
+  animation: cinematic-reveal 1.4s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+/* Hover: per-char with neighbor spread — inline styles drive transforms, CSS handles transition */
+.hero-char {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              color 0.35s ease;
+  will-change: transform;
+}
+
+/* ============================================================
+   Hero — Gradient Glow
+   ============================================================ */
+
+.hero-glow {
+  background: radial-gradient(
+    ellipse 60% 50% at 50% 50%,
+    rgba(200, 151, 94, 0.18) 0%,
+    rgba(200, 151, 94, 0.06) 35%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* ============================================================
+   Logo Carousel — CSS-based infinite scroll (no JS jank)
+   ============================================================ */
+
+@keyframes logo-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+.logo-scroll-track {
+  animation: logo-scroll 25s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Pause when hovering anywhere on the carousel wrapper (not just the track) */
+.logo-carousel:hover .logo-scroll-track {
+  animation-play-state: paused;
+}
+
+/* ============================================================
+   Filmstrip Gallery — auto-scroll, pause on hover
+   ============================================================ */
+
+.filmstrip-wrapper {
+  contain: layout style paint;
+}
+
+.filmstrip-track {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Pure CSS hover — avoids Framer Motion RAF overhead on 18+ cards */
+.filmstrip-card {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform: translateZ(0); /* promote to GPU layer */
+  contain: strict; /* isolate layout & paint per card */
+}
+.filmstrip-card:hover {
+  transform: translateZ(0) scale(1.025);
+}
+.filmstrip-card:active {
+  transform: translateZ(0) scale(0.98);
+}
+.filmstrip-card img {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* ============================================================
+   Floating Shapes — diamond / triangle
+   ============================================================ */
+
+@keyframes float-diamond {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+  50%      { transform: translateY(-14px) rotate(8deg); opacity: 0.55; }
+}
+
+.animate-float-diamond {
+  animation: float-diamond 7s ease-in-out infinite;
+}
+
+@keyframes drift-triangle {
+  0%, 100% { transform: translate(0, 0); opacity: 0.25; }
+  33%      { transform: translate(12px, -16px); opacity: 0.5; }
+  66%      { transform: translate(-8px, -6px); opacity: 0.35; }
+}
+
+.animate-drift-triangle {
+  animation: drift-triangle 9s ease-in-out infinite;
+}
+
+/* ============================================================
+   Utility — hide scrollbar
+   ============================================================ */
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+

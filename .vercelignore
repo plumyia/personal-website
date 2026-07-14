@@ -1,0 +1,10 @@
+# Project documentation & raw files — not needed for deployment
+01_docs/
+02_projects/
+03_assets/
+04_content/
+05_design/
+06_reference/
+.claude/
+CLAUDE.md
+button.md
