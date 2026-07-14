@@ -194,10 +194,7 @@ export function Header() {
   const [overDark, setOverDark] = useState(false);
 
   // Hide header during home page loading screen to prevent flash
-  const [loadingDone, setLoadingDone] = useState(() => {
-    if (typeof window === "undefined") return true;
-    return sessionStorage.getItem(LOADING_KEY) === "1";
-  });
+  const [loadingDone, setLoadingDone] = useState(false);
 
   useEffect(() => {
     if (!isHome) {

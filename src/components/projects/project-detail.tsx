@@ -547,6 +547,11 @@ export function ProjectDetail({ project }: Props) {
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, [heroReady]);
 
+  // Reset scroll position when navigating between different project detail pages
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [project.slug]);
+
   const idx = projects.findIndex((p) => p.slug === project.slug);
   const prevProject = idx > 0 ? projects[idx - 1] : null;
   const nextProject = idx < projects.length - 1 ? projects[idx + 1] : null;

@@ -276,9 +276,9 @@ textarea,
 
 /* Pure CSS hover — avoids Framer Motion RAF overhead on 18+ cards */
 .filmstrip-card {
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
   transform: translateZ(0); /* promote to GPU layer */
-  contain: strict; /* isolate layout & paint per card */
+  contain: layout style; /* isolate layout per card, allow GPU paint */
 }
 .filmstrip-card:hover {
   transform: translateZ(0) scale(1.025);

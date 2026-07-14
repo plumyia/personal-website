@@ -198,7 +198,7 @@ export default function AboutPage() {
 
       {/* ── Resume — fixed bottom-right corner ── */}
       <motion.a
-        href="/resume.pdf"
+        href="/Resume.pdf"
         target="_blank"
         rel="noopener noreferrer"
         className="cursor-hover fixed bottom-14 right-20 z-40 inline-flex items-center gap-2 rounded-full border border-accent/40 bg-bg-primary/90 px-5 py-2.5 text-[14px] text-accent shadow-sm backdrop-blur transition-all duration-300 hover:bg-accent hover:text-white"
