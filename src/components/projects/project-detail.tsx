@@ -524,10 +524,17 @@ export function ProjectDetail({ project }: Props) {
   const heroImgRef = useRef<HTMLImageElement>(null);
   const [heroReady, setHeroReady] = useState(false);
 
-  // Before paint: ensure page starts at top. useLayoutEffect runs synchronously
-  // after DOM commit but BEFORE browser paints — no visible scroll jump.
+  // Ensure each project page starts at top. Temporarily disable smooth
+  // scroll-behavior so the reset is instant, then restore it after.
   useLayoutEffect(() => {
-    document.documentElement.scrollTop = 0;
+    const html = document.documentElement;
+    const prev = html.style.scrollBehavior;
+    html.style.scrollBehavior = "auto";
+    html.scrollTop = 0;
+    // Restore smooth scroll-behavior after this frame commits
+    requestAnimationFrame(() => {
+      html.style.scrollBehavior = prev;
+    });
   }, [project.slug]);
 
   // Safety timeout — force-start phase animation after 2.5s even if
