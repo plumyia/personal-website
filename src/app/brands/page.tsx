@@ -331,6 +331,13 @@ export default function BrandsPage() {
         </h1>
         <p className="mt-2 text-[14px] text-text-tertiary">Brand Partners</p>
 
+        {/* Hidden preload — real DOM img tags so browser decodes preview images eagerly */}
+        <div aria-hidden="true" style={{ position: "absolute", width: 0, height: 0, overflow: "hidden", opacity: 0, pointerEvents: "none" }}>
+          {brandLogos.map((brand) => (
+            <img key={brand.slug} src={`/brands/preview/${brand.slug}-preview.jpg`} alt="" loading="eager" decoding="sync" />
+          ))}
+        </div>
+
         {/* Logo Grid */}
         <div className="mt-14 grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4">
           {brandLogos.map((brand, idx) => (
