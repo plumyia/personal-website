@@ -50,14 +50,6 @@ export function BrandsGallerySection() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [scrollDistance, setScrollDistance] = useState(0);
 
-  // Preload all brand preview images so hover shows instantly
-  useEffect(() => {
-    BRAND_GROUPS.flat().forEach((brand) => {
-      const img = new Image();
-      img.src = brand.src;
-      img.decode().then(() => {}).catch(() => {});
-    });
-  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -100,6 +92,13 @@ export function BrandsGallerySection() {
       >
         <SectionHeading label="brand partners" title="合作品牌" />
       </motion.div>
+
+      {/* Hidden preload — real DOM img tags force browser to decode bitmaps into compositor cache */}
+      <div aria-hidden="true" style={{ position: "absolute", width: 0, height: 0, overflow: "hidden", opacity: 0, pointerEvents: "none" }}>
+        {BRAND_GROUPS.flat().map((b, i) => (
+          <img key={i} src={b.src} alt="" loading="eager" decoding="sync" />
+        ))}
+      </div>
 
       {/* Horizontal Scroll Area — sticky: logo + preview + button all together */}
       <div
