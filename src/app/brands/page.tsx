@@ -137,8 +137,8 @@ function BrandLightbox({
                 <img
                   src={
                     brand.hasDetail0
-                      ? `/brands/detail/${brand.slug}-detail0.jpg?v=3`
-                      : `/brands/detail/${brand.slug}-detail.jpg?v=3`
+                      ? `/brands/detail/${brand.slug}-detail0.webp`
+                      : `/brands/detail/${brand.slug}-detail.webp`
                   }
                   alt=""
                   className={showDetail0 ? "block w-full" : "hidden"}
@@ -149,7 +149,7 @@ function BrandLightbox({
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   ref={mainImgRef}
-                  src={`/brands/detail/${brand.slug}-detail.jpg?v=3`}
+                  src={`/brands/detail/${brand.slug}-detail.webp`}
                   alt={`${brand.name} 详情`}
                   className={`block w-full ${showDetail0 ? "-mt-px" : ""}`}
                   draggable={false}
@@ -311,8 +311,8 @@ export default function BrandsPage() {
   // Preload + pre-decode all brand detail images so src swap is instant
   useEffect(() => {
     brandLogos.forEach(async (brand) => {
-      const urls = [`/brands/detail/${brand.slug}-detail.jpg?v=3`];
-      if (brand.hasDetail0) urls.push(`/brands/detail/${brand.slug}-detail0.jpg?v=3`);
+      const urls = [`/brands/detail/${brand.slug}-detail.webp`];
+      if (brand.hasDetail0) urls.push(`/brands/detail/${brand.slug}-detail0.webp`);
       for (const url of urls) {
         const img = new window.Image();
         img.src = url;
@@ -331,10 +331,17 @@ export default function BrandsPage() {
         </h1>
         <p className="mt-2 text-[14px] text-text-tertiary">Brand Partners</p>
 
-        {/* Hidden preload — real DOM img tags so browser decodes preview images eagerly */}
+        {/* Hidden preload — real DOM img tags so browser decodes preview + detail images eagerly */}
         <div aria-hidden="true" style={{ position: "absolute", width: 0, height: 0, overflow: "hidden", opacity: 0, pointerEvents: "none" }}>
-          {brandLogos.map((brand) => (
-            <img key={brand.slug} src={`/brands/preview/${brand.slug}-preview.jpg`} alt="" loading="eager" decoding="sync" />
+          {brandLogos.flatMap((brand) => {
+            const imgs = [{ key: brand.slug, src: `/brands/preview/${brand.slug}-preview.jpg` }];
+            imgs.push({ key: `${brand.slug}-detail`, src: `/brands/detail/${brand.slug}-detail.webp` });
+            if (brand.hasDetail0) {
+              imgs.push({ key: `${brand.slug}-detail0`, src: `/brands/detail/${brand.slug}-detail0.webp` });
+            }
+            return imgs;
+          }).map(({ key, src }) => (
+            <img key={key} src={src} alt="" loading="eager" decoding="sync" />
           ))}
         </div>
 

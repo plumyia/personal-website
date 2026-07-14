@@ -634,6 +634,13 @@ export function ProjectDetail({ project }: Props) {
   return (
     <>
 
+      {/* Hidden preload — real DOM img tag forces browser to decode hero bitmap eagerly.
+          Without this, the hero <img> starts loading during React commit but the browser
+          hasn't decoded it yet, so the background gradient shows through first. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={project.hero} alt="" aria-hidden="true" loading="eager" decoding="sync"
+        style={{ position: "absolute", width: 0, height: 0, overflow: "hidden", opacity: 0, pointerEvents: "none" }} />
+
       {/* ================================================================
           Hero
           ================================================================ */}
