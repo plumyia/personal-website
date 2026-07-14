@@ -628,6 +628,8 @@ export function ProjectDetail({ project }: Props) {
             alt={project.name}
             className={`absolute inset-0 h-full w-full object-cover ${heroObjectPos}`}
             fetchPriority="high"
+            loading="eager"
+            decoding="sync"
             onLoad={() => setHeroReady(true)}
             initial={{ scale: 1.15 }}
             animate={

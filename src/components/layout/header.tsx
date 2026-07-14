@@ -183,6 +183,8 @@ function isOverDarkBackground(): boolean {
   return false; // default: light background
 }
 
+const LOADING_KEY = "__home_loading__";
+
 export function Header() {
   const pathname = usePathname();
   const isHome = pathname === "/";
@@ -190,6 +192,38 @@ export function Header() {
     pathname.startsWith("/projects/") && pathname !== "/projects";
   const [scrolled, setScrolled] = useState(false);
   const [overDark, setOverDark] = useState(false);
+
+  // Hide header during home page loading screen to prevent flash
+  const [loadingDone, setLoadingDone] = useState(() => {
+    if (typeof window === "undefined") return true;
+    return sessionStorage.getItem(LOADING_KEY) === "1";
+  });
+
+  useEffect(() => {
+    if (!isHome) {
+      setLoadingDone(true);
+      return;
+    }
+    if (sessionStorage.getItem(LOADING_KEY) === "1") {
+      setLoadingDone(true);
+      return;
+    }
+    // Poll for loading completion
+    const interval = setInterval(() => {
+      if (sessionStorage.getItem(LOADING_KEY) === "1") {
+        setLoadingDone(true);
+        clearInterval(interval);
+      }
+    }, 100);
+    const timeout = setTimeout(() => {
+      setLoadingDone(true);
+      clearInterval(interval);
+    }, 6000);
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
+  }, [isHome]);
 
   useEffect(() => {
     let ticking = false;
@@ -250,7 +284,7 @@ export function Header() {
 
   return (
     <header
-      className="fixed top-0 left-0 right-0 z-50 bg-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 bg-transparent transition-opacity duration-300 ${loadingDone ? "opacity-100" : "opacity-0 pointer-events-none"}`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3.5 sm:px-8">
         {/* Brand — name + feather, top-left */}

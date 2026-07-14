@@ -158,7 +158,7 @@ export const contactData: ContactData = {
 // ============================================================
 export const brandLogos: BrandLogo[] = [
   { name: "NIKE x 权志龙 联名", file: "NIKE.png", slug: "NIKE", height: "h-15", carouselHeight: "h-14" },
-  { name: "宝格丽SERPENTI系列", file: "bvlgari.png", slug: "bvlgari", height: "h-24", carouselHeight: "h-19" },
+  { name: "宝格丽SERPENTI系列", file: "BVLGARI.png", slug: "bvlgari", height: "h-24", carouselHeight: "h-19" },
   { name: "欧莱雅·金致松露艺术展", file: "LOREAL.png", slug: "LOREAL", height: "h-15", carouselHeight: "h-14", hasDetail0: true },
   { name: "三得利全球首家旗舰店", file: "SUNTORY.png", slug: "SUNTORY", height: "h-8", carouselHeight: "h-8", hasDetail0: true },
   { name: "山姆会员商店中秋礼", file: "sams.png", slug: "sams", height: "h-15", carouselHeight: "h-14", hasDetail0: true },
