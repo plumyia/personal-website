@@ -524,16 +524,6 @@ export function ProjectDetail({ project }: Props) {
   const heroImgRef = useRef<HTMLImageElement>(null);
   const [heroReady, setHeroReady] = useState(false);
 
-  // Ensure each project page renders from the top — no scroll animation.
-  // `history.scrollRestoration = "manual"` prevents the browser from restoring
-  // a previous scroll position. `scrollTop = 0` is instant (not animated).
-  useEffect(() => {
-    if ("scrollRestoration" in window.history) {
-      window.history.scrollRestoration = "manual";
-    }
-    document.documentElement.scrollTop = 0;
-  }, [project.slug]);
-
   // Safety timeout — force-start phase animation after 2.5s even if
   // hero image hasn't fired onLoad (e.g. network error, extreme slowness)
   useEffect(() => {
