@@ -28,27 +28,27 @@ interface PhoneData {
 const PHONES: PhoneData[] = [
   {
     id: "wechat",
-    hoverLabel: "微信优秀作品展示+投票",
+    hoverLabel: "微信优秀作品展示-投票",
     type: "stacked-images",
     assets: [
-      { src: "/projects/cny-2025/social/微信/微信优秀作品展示+投票.jpg" },
+      { src: "/projects/cny-2025/social/微信/微信优秀作品展示-投票.jpg" },
     ],
     screenInset: { top: "3.3%", left: "6.1%", right: "6.1%", bottom: "2.9%" },
   },
   {
     id: "weibo",
-    hoverLabel: "微博宣发+抽奖",
+    hoverLabel: "微博宣发-抽奖",
     type: "stacked-images",
     assets: [
-      { src: "/projects/cny-2025/social/微博/微博宣发+抽奖.jpg" },
+      { src: "/projects/cny-2025/social/微博/微博宣发-抽奖.jpg" },
     ],
   },
   {
     id: "red",
-    hoverLabel: "小红书宣发+抽奖",
+    hoverLabel: "小红书宣发-抽奖",
     type: "stacked-images",
     assets: [
-      { src: "/projects/cny-2025/social/小红书/小红书宣发+抽奖.jpg" },
+      { src: "/projects/cny-2025/social/小红书/小红书宣发-抽奖.jpg" },
     ],
   },
   {

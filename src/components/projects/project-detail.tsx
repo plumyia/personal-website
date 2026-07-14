@@ -547,11 +547,6 @@ export function ProjectDetail({ project }: Props) {
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, [heroReady]);
 
-  // Reset scroll position when navigating between different project detail pages
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [project.slug]);
-
   const idx = projects.findIndex((p) => p.slug === project.slug);
   const prevProject = idx > 0 ? projects[idx - 1] : null;
   const nextProject = idx < projects.length - 1 ? projects[idx + 1] : null;
@@ -581,9 +576,9 @@ export function ProjectDetail({ project }: Props) {
   useEffect(() => {
     if (project.slug !== "cny-2025") return;
     const assets = [
-      "/projects/cny-2025/social/微信/微信优秀作品展示+投票.jpg",
-      "/projects/cny-2025/social/微博/微博宣发+抽奖.jpg",
-      "/projects/cny-2025/social/小红书/小红书宣发+抽奖.jpg",
+      "/projects/cny-2025/social/微信/微信优秀作品展示-投票.jpg",
+      "/projects/cny-2025/social/微博/微博宣发-抽奖.jpg",
+      "/projects/cny-2025/social/小红书/小红书宣发-抽奖.jpg",
       "/projects/cny-2025/social/kol/搜索组件.jpg",
       "/projects/cny-2025/social/kol/线下探店.jpg",
       ...Array.from({ length: 5 }, (_, i) => `/projects/cny-2025/social/粉丝快展打卡/图片${i + 1}.jpg`),
@@ -633,8 +628,6 @@ export function ProjectDetail({ project }: Props) {
             alt={project.name}
             className={`absolute inset-0 h-full w-full object-cover ${heroObjectPos}`}
             fetchPriority="high"
-            loading="eager"
-            decoding="sync"
             onLoad={() => setHeroReady(true)}
             initial={{ scale: 1.15 }}
             animate={

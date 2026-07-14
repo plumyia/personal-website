@@ -36,11 +36,5 @@ export default async function ProjectDetailPage({
   const project = projectDetails[slug];
   if (!project) notFound();
 
-  return (
-    <>
-      {/* Preload hero image for instant rendering */}
-      <link rel="preload" as="image" href={project.hero} fetchPriority="high" />
-      <ProjectDetail project={project} />
-    </>
-  );
+  return <ProjectDetail project={project} />;
 }
