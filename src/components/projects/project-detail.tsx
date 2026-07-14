@@ -568,36 +568,49 @@ export function ProjectDetail({ project }: Props) {
   const metricsRef = useRef<HTMLDivElement>(null);
   const metricsInView = useInView(metricsRef, { once: true, amount: 0.4 });
 
-  // Force browser to download + decode all CNY phone screen images at the
-  // HIGHEST priority before the user scrolls. We use THREE mechanisms together:
-  // 1. <link rel="preload"> — highest download priority (bypasses heuristics)
-  // 2. new Image() + .decode() — forces the browser to decode the bitmap now
-  // 3. Hidden <img> tags in PhoneCarousel — keeps decoded bitmaps in compositor cache
+  // Preload all major assets: hero, gallery images, videos
   useEffect(() => {
-    if (project.slug !== "cny-2025") return;
-    const assets = [
-      "/projects/cny-2025/social/微信/微信优秀作品展示-投票.jpg",
-      "/projects/cny-2025/social/微博/微博宣发-抽奖.jpg",
-      "/projects/cny-2025/social/小红书/小红书宣发-抽奖.jpg",
-      "/projects/cny-2025/social/kol/搜索组件.jpg",
-      "/projects/cny-2025/social/kol/线下探店.jpg",
-      ...Array.from({ length: 5 }, (_, i) => `/projects/cny-2025/social/粉丝快展打卡/图片${i + 1}.jpg`),
-      ...Array.from({ length: 5 }, (_, i) => `/projects/cny-2025/social/晒单/小红书${String(i + 1).padStart(2, "0")}.jpg`),
-      "/projects/cny-2025/iPhone 16pro.png",
-    ];
+    const assets: string[] = [];
+
+    // 1. Always preload hero
+    if (project.hero) assets.push(project.hero);
+
+    // 2. Preload gallery images
+    if (project.gallery) assets.push(...project.gallery);
+
+    // 3. CNCY phone carousel assets
+    if (project.slug === "cny-2025") {
+      assets.push(
+        "/projects/cny-2025/social/微信/微信优秀作品展示-投票.jpg",
+        "/projects/cny-2025/social/微博/微博宣发-抽奖.jpg",
+        "/projects/cny-2025/social/小红书/小红书宣发-抽奖.jpg",
+        "/projects/cny-2025/social/kol/搜索组件.jpg",
+        "/projects/cny-2025/social/kol/线下探店.jpg",
+        "/projects/cny-2025/iPhone 16pro.png",
+        ...Array.from({ length: 5 }, (_, i) => `/projects/cny-2025/social/粉丝快展打卡/图片${i + 1}.jpg`),
+        ...Array.from({ length: 5 }, (_, i) => `/projects/cny-2025/social/晒单/小红书${String(i + 1).padStart(2, "0")}.jpg`),
+      );
+    }
+
+    // 4. Video assets
+    if (project.slug === "xmas-market") {
+      assets.push("/projects/xmas-market/videos/xmas-market.mp4");
+    }
+
     const links: HTMLLinkElement[] = [];
     assets.forEach((src) => {
-      // Mechanism 1: <link rel="preload"> — forces browser to download at highest priority
+      const isVideo = src.endsWith(".mp4");
       const link = document.createElement("link");
       link.rel = "preload";
-      link.as = "image";
+      link.as = isVideo ? "fetch" : "image";
       link.href = src;
       document.head.appendChild(link);
       links.push(link);
-      // Mechanism 2: Image.decode() — forces the browser to decode the bitmap
-      const img = new Image();
-      img.src = src;
-      img.decode().then(() => {}).catch(() => {});
+      if (!isVideo) {
+        const img = new Image();
+        img.src = src;
+        img.decode().then(() => {}).catch(() => {});
+      }
     });
     return () => {
       links.forEach((l) => document.head.removeChild(l));

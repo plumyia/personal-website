@@ -37,7 +37,7 @@ function BrandCard({ name, src, cropBottom }: { name: string; src: string; cropB
         src={src}
         alt={name}
         className={`block aspect-[3/1] w-full object-cover ${cropBottom ? "object-top" : ""}`}
-        loading="lazy"
+        loading="eager"
         draggable={false}
       />
       <div className="pointer-events-none absolute inset-0 rounded-lg ring-1 ring-inset ring-border/30 transition-colors group-hover:ring-accent/20" />

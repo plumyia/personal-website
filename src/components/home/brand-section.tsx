@@ -63,7 +63,7 @@ export function BrandSection() {
                 src={`/brands/logo/${logo.file}`}
                 alt={logo.name}
                 className={`max-h-full w-auto object-contain ${logo.logoClass || ""}`}
-                loading="lazy"
+                loading="eager"
                 draggable={false}
               />
             </div>
