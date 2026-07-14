@@ -278,8 +278,8 @@ textarea,
 .filmstrip-card {
   transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
   transform: translateZ(0); /* promote to GPU layer */
-  contain: layout style; /* isolate layout per card, allow GPU paint */
-}
+  contain: layout style paint; /* isolate per card — decode doesn't repaint siblings */
+  }
 .filmstrip-card:hover {
   transform: translateZ(0) scale(1.025);
 }

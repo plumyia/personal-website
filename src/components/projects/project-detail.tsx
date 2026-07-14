@@ -248,6 +248,7 @@ function GalleryFilmstrip({
                     alt={`${name} — ${realIdx + 1}`}
                     className="h-full w-full object-cover"
                     loading="lazy"
+                    decoding="async"
                     draggable={false}
                   />
 
@@ -678,6 +679,7 @@ export function ProjectDetail({ project }: Props) {
             className={`absolute inset-0 h-full w-full object-cover ${heroObjectPos}`}
             fetchPriority="high"
             onLoad={() => setHeroReady(true)}
+            style={{ willChange: "transform" }}
             initial={{ scale: 1.15 }}
             animate={
               heroReady
