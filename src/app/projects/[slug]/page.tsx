@@ -42,7 +42,7 @@ export default async function ProjectDetailPage({
           Critical because the hero is a progressive JPEG now: first scan renders within
           ~20% of download, so early discovery = near-instant first paint. */}
       <link rel="preload" as="image" href={project.hero} fetchPriority="high" />
-      <ProjectDetail project={project} />
+      <ProjectDetail key={project.slug} project={project} />
     </>
   );
 }
