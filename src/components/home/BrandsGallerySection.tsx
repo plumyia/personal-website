@@ -50,6 +50,15 @@ export function BrandsGallerySection() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [scrollDistance, setScrollDistance] = useState(0);
 
+  // Preload all brand preview images so hover shows instantly
+  useEffect(() => {
+    BRAND_GROUPS.flat().forEach((brand) => {
+      const img = new Image();
+      img.src = brand.src;
+      img.decode().then(() => {}).catch(() => {});
+    });
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],

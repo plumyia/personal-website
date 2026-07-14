@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, useLayoutEffect } from "react";
 import {
   motion,
   AnimatePresence,
@@ -567,6 +567,20 @@ export function ProjectDetail({ project }: Props) {
 
   const metricsRef = useRef<HTMLDivElement>(null);
   const metricsInView = useInView(metricsRef, { once: true, amount: 0.4 });
+
+  // Preload hero image BEFORE paint — prevents background-first-then-hero flash
+  useLayoutEffect(() => {
+    if (!project.hero) return;
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "image";
+    link.href = project.hero;
+    document.head.appendChild(link);
+    const img = new Image();
+    img.src = project.hero;
+    img.decode().then(() => {}).catch(() => {});
+    return () => { document.head.removeChild(link); };
+  }, [project.slug, project.hero]);
 
   // Preload all major assets: hero, gallery images, videos
   useEffect(() => {

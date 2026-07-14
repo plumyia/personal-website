@@ -15,10 +15,15 @@ function wasLoadingShown(): boolean {
 }
 
 export function HomePageClient() {
-  const [loading, setLoading] = useState(() => {
-    if (typeof window === "undefined") return false; // SSR: skip loading
-    return !wasLoadingShown(); // Client: show if not already shown
-  });
+  // Always start with loading=true (SSR renders LoadingScreen, not home content).
+  // After hydration, check if loading was already shown this session and skip if so.
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (wasLoadingShown()) {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     // Clear marker on page unload (refresh / close tab)
