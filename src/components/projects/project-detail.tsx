@@ -1111,6 +1111,7 @@ export function ProjectDetail({ project }: Props) {
               {prevProject && (
                 <Link
                   href={`/projects/${prevProject.slug}`}
+                  scroll={false}
                   className="cursor-hover group flex flex-col text-left"
                 >
                   <span className="text-[11px] tracking-widest text-text-tertiary uppercase">
@@ -1126,6 +1127,7 @@ export function ProjectDetail({ project }: Props) {
               {nextProject && (
                 <Link
                   href={`/projects/${nextProject.slug}`}
+                  scroll={false}
                   className="cursor-hover group flex flex-col text-right"
                 >
                   <span className="text-[11px] tracking-widest text-text-tertiary uppercase">
