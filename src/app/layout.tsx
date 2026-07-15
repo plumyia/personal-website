@@ -24,6 +24,13 @@ export default function RootLayout({
   return (
     <html lang="zh-CN">
       <head>
+        {/* Preload feather image before React starts — ensures mobile sees it in time */}
+        <link rel="preload" as="image" href="/feather.webp" fetchPriority="high" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: 'new Image().src="/feather.webp";',
+          }}
+        />
         {/* Fonts: Playfair Display for hero, Inter for body */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link

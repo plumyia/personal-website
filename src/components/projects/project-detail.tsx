@@ -108,6 +108,27 @@ function HoverVideo({
     }
   }, [hasPlayed]);
 
+  // Auto-play when visible on mobile (touch devices only, desktop hover unchanged)
+  useEffect(() => {
+    const isTouchDevice = typeof window !== "undefined" && ("ontouchstart" in window || navigator.maxTouchPoints > 0);
+    if (!isTouchDevice) return;
+    const el = videoRef.current;
+    if (!el) return;
+    if (hasPlayed) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.play().catch(() => {});
+          setHasPlayed(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [hasPlayed, src]);
+
   return (
     <motion.video
       ref={videoRef}
@@ -239,7 +260,7 @@ function GalleryFilmstrip({
                 <button
                   key={`${src}-${i}`}
                   className="filmstrip-card group relative shrink-0 cursor-pointer overflow-hidden rounded-xl"
-                  style={{ width: "clamp(220px, 32vw, 320px)", aspectRatio: "4/3" }}
+                  style={{ width: "clamp(160px, 40vw, 320px)", aspectRatio: "4/3" }}
                   onClick={() => setLightboxIdx(realIdx)}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
