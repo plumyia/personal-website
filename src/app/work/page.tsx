@@ -1,4 +1,9 @@
+import type { Metadata } from "next";
 import { WorkViewer } from "@/components/layout/work-viewer";
+
+export const metadata: Metadata = {
+  title: "Project",
+};
 
 export default function WorkPage() {
   return (

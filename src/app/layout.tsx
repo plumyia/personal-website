@@ -5,9 +5,15 @@ import { Footer } from "@/components/layout/footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "徐羽佳 | 品牌营销 · 新媒体运营 · 活动策划",
+  title: {
+    template: "%s - 徐羽佳",
+    default: "徐羽佳",
+  },
   description:
     "专注品牌活动与内容增长，擅长从0到1打造传播项目。个人作品集网站。",
+  icons: {
+    icon: "/feather-favicon-384.png",
+  },
 };
 
 export default function RootLayout({

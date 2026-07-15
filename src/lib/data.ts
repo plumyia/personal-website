@@ -92,7 +92,7 @@ export const projects: ProjectCard[] = [
   },
   {
     slug: "cny-2025",
-    name: "2025 新春活动",
+    name: "2025 新春礼盒",
     brand: "TAOKAENOI 老板仔",
     date: "2024.12 – 2025.2",
     tags: ["整合营销", "明星合作", "快闪展"],
@@ -262,7 +262,7 @@ export const projectDetails: Record<string, ProjectDetail> = {
   },
   "cny-2025": {
     slug: "cny-2025",
-    name: "2025 新春活动",
+    name: "2025 新春礼盒",
     subtitle: "有仔有福 · 2025 新春礼盒整合营销，三阶段递进式 CNY 战役",
     brand: "TAOKAENOI 老板仔",
     date: "2024.12 – 2025.2",

@@ -18,7 +18,7 @@ export async function generateMetadata({
   if (!project) return {};
 
   return {
-    title: `${project.name} | 徐羽佳`,
+    title: project.name,
     description: project.description?.[0] ?? "",
     other: {
       // Preload hero image so it renders before the background gradient
